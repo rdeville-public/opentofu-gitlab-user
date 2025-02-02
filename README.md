@@ -5,7 +5,7 @@
 
 > ⚠️ IMPORTANT !
 >
-> Main repo is on [framagit.org](https://framagit.org/rdeville-public/opentofu/github-user).
+> Main repo is on [framagit.org](https://framagit.org/rdeville-public/opentofu/gitlab-user).
 >
 > On other online git platforms, they are just mirror of the main repo.
 >
@@ -25,12 +25,12 @@
 
 </center>
 
-[build_badge]: https://framagit.org/rdeville-public/opentofu/github-user/badges/main/pipeline.svg
-[build_badge_url]: https://framagit.org/rdeville-public/opentofu/github-user/-/commits/main
-[release_badge]: https://framagit.org/rdeville-public/opentofu/github-user/-/badges/release.svg
-[release_badge_url]: https://framagit.org/rdeville-public/opentofu/github-user/-/releases/
+[build_badge]: https://framagit.org/rdeville-public/opentofu/gitlab-user/badges/main/pipeline.svg
+[build_badge_url]: https://framagit.org/rdeville-public/opentofu/gitlab-user/-/commits/main
+[release_badge]: https://framagit.org/rdeville-public/opentofu/gitlab-user/-/badges/release.svg
+[release_badge_url]: https://framagit.org/rdeville-public/opentofu/gitlab-user/-/releases/
 [license_badge]: https://img.shields.io/badge/Licenses-MIT%20OR%20BEERWARE-blue
-[license_url]: https://framagit.org/rdeville-public/opentofu/github-user/blob/main/LICENSE
+[license_url]: https://framagit.org/rdeville-public/opentofu/gitlab-user/blob/main/LICENSE
 [changelog_badge]: https://img.shields.io/badge/Changelog-Python%20Semantic%20Release-yellow
 [changelog_badge_url]: https://github.com/python-semantic-release/python-semantic-release
 
@@ -38,48 +38,39 @@ OpenTofu modules allowing to manage gitlab user configuration.
 
 ---
 <!-- BEGIN DOTGIT-SYNC BLOCK EXCLUDED CUSTOM_README -->
-<!-- YOU CAN REPLACE THIS COMMENT AND PUT CUSTOM CONTENT HERE -->
-<!-- YOUR CUSTOM CONTENT WILL NOT BE OVERRIDDEN -->
-## 📌 Prerequisites
-
-## ⚙️ Install
-
 ## 🚀 Usage
 
-## ✅ Run tests
+### Deploy User SSH Keys
 
-<!-- END DOTGIT-SYNC BLOCK EXCLUDED CUSTOM_README -->
-## 🤝 Contributing
+```hcl
+module "repo" {
+  source = "git::https://framagit.org/rdeville-public/terraform/module-gitlab-user.git"
 
-Contributions, issues and feature requests are welcome!
+  # Required variables
+  ssh_keys = {
+    "My Github SSH Key" = "ssh-ed25519 ABCDEFGHIJKLMNOPQRSTUVWXYZ Comment"
+    "Another SSH Key" = file(~/.ssh/id_rsa.pub)
+  }
+}
+```
 
-Feel free to check [issues page][issues_pages].
+### Deploy User GPG Keys
 
-You can also take a look at the [CONTRIBUTING.md][contributing].
+```hcl
+module "repo" {
+  source = "git::https://framagit.org/rdeville-public/terraform/module-gitlab-user.git"
 
-[issues_pages]: https://framagit.org/rdeville-public/opentofu/github-user/-/issues
-[contributing]: https://framagit.org/rdeville-public/opentofu/github-user/blob/main/CONTRIBUTING.md
+  # Required variables
+  ssh_keys = {
+    "SSH Key" = file(~/.ssh/id_rsa.pub)
+  }
 
-## 👤 Maintainers
-
-* 📧 [**Romain Deville** \<code@romaindeville.fr\>](mailto:code@romaindeville.fr)
-  * Website: [https://romaindeville.fr](https://romaindeville.fr)
-  * Github: [@rdeville](https://github.com/rdeville)
-  * Gitlab: [@r.deville](https://gitlab.com/r.deville)
-  * Framagit: [@rdeville](https://framagit.org/rdeville)
-
-## 📝 License
-
-Copyright © 2024 [Romain Deville](code@romaindeville.fr)
-
-This project is under following licenses (**OR**) :
-
-* [MIT][main_license]
-* [BEERWARE][beerware_license]
-
-[main_license]: https://framagit.org/rdeville-public/opentofu/github-user/blob/main/LICENSE
-[beerware_license]: https://framagit.org/rdeville-public/opentofu/github-user/blob/main/LICENSE.BEERWARE
-<!-- END DOTGIT-SYNC BLOCK MANAGED -->
+  # Example value
+  gpg_keys = {
+    "Key Identifier" = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n...\n-----END PGP PUBLIC KEY BLOCK-----"
+  }
+}
+```
 
 <!-- BEGIN TF-DOCS -->
 ## ⚙️ Module Content
@@ -90,41 +81,57 @@ This project is under following licenses (**OR**) :
 
 * [Requirements](#requirements)
 * [Resources](#resources)
+* [Inputs](#inputs)
+  * [Required Inputs](#required-inputs)
   * [Optional Inputs](#optional-inputs)
 
 ### Requirements
 
-* [gitlab](https://search.opentofu.org/provider/gitlabhq/gitlab/):
-  `~>16.0`
-
-### Data Sources
-
-* [data.gitlab_current_user.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/current_user)
-  >
-* [data.gitlab_users.current_user](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/users)
-  >
+* [opentofu](https://opentofu.org/docs/):
+  `>= 1.8, < 2.0`
+* [gitlab](https://search.opentofu.org/provider/opentofu/gitlab/):
+  `~>17.0`
 
 ### Resources
 
-* [resource.gitlab_personal_access_token.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/personal_access_token)
-  >
-* [resource.gitlab_user_gpgkey.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/user_gpgkey)
-  >
-* [resource.gitlab_user_sshkey.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/user_sshkey)
-  >
+* [resource.gitlab_user_gpgkey.this](https://registry.terraform.io/providers/opentofu/gitlab/latest/docs/resources/user_gpgkey)
+  > Manager user GPG keys
+* [resource.gitlab_user_sshkey.this](https://registry.terraform.io/providers/opentofu/gitlab/latest/docs/resources/user_sshkey)
+  > Manager user SSH keys
 
 <!-- markdownlint-capture -->
+### Inputs
 
 <!-- markdownlint-disable -->
-### Optional Inputs
+#### Required Inputs
 
-* [user_gpgkeys](#user_gpgkeys)
-* [user_sshkeys](#user_sshkeys)
-* [user_access_tokens](#user_access_tokens)
+* [ssh_keys](#ssh_keys)
+
+##### `ssh_keys`
+
+Map of string, where key is the title of the Key and value is the SSH Key
+
+<div style="display:inline-block;width:100%;">
+<div style="float:left;border-color:#FFFFFF;width:75%;">
+<details><summary>Type</summary>
+
+```hcl
+map(string)
+```
+
+</details>
+</div>
+</div>
+
+#### Optional Inputs
+
+* [gpg_keys](#gpg_keys)
 
 
-#### `user_gpgkeys`
+##### `gpg_keys`
 
+Map of string, where key is just an identifier and value is the GPG key,
+generated in ASCII-armored format
 
 <details style="width: 100%;display: inline-block">
   <summary>Type & Default</summary>
@@ -146,62 +153,41 @@ This project is under following licenses (**OR**) :
 
   </div>
 </details>
-
-#### `user_sshkeys`
-
-
-<details style="width: 100%;display: inline-block">
-  <summary>Type & Default</summary>
-  <div style="height: 1em"></div>
-  <div style="width:64%; float:left;">
-  <p style="border-bottom: 1px solid #333333;">Type</p>
-
-  ```hcl
-  map(object({
-    key        = string,
-    expires_at = string
-  }))
-  ```
-
-  </div>
-  <div style="width:34%;float:right;">
-  <p style="border-bottom: 1px solid #333333;">Default</p>
-
-  ```hcl
-  {}
-  ```
-
-  </div>
-</details>
-
-#### `user_access_tokens`
-
-
-<details style="width: 100%;display: inline-block">
-  <summary>Type & Default</summary>
-  <div style="height: 1em"></div>
-  <div style="width:64%; float:left;">
-  <p style="border-bottom: 1px solid #333333;">Type</p>
-
-  ```hcl
-  map(object({
-    expires_at = string
-    scopes     = list(string)
-  }))
-  ```
-
-  </div>
-  <div style="width:34%;float:right;">
-  <p style="border-bottom: 1px solid #333333;">Default</p>
-
-  ```hcl
-  {}
-  ```
-
-  </div>
-</details>
 <!-- markdownlint-restore -->
 
 </details>
 
 <!-- END TF-DOCS -->
+<!-- END DOTGIT-SYNC BLOCK EXCLUDED CUSTOM_README -->
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check [issues page][issues_pages].
+
+You can also take a look at the [CONTRIBUTING.md][contributing].
+
+[issues_pages]: https://framagit.org/rdeville-public/opentofu/gitlab-user/-/issues
+[contributing]: https://framagit.org/rdeville-public/opentofu/gitlab-user/blob/main/CONTRIBUTING.md
+
+## 👤 Maintainers
+
+* 📧 [**Romain Deville** \<code@romaindeville.fr\>](mailto:code@romaindeville.fr)
+  * Website: [https://romaindeville.fr](https://romaindeville.fr)
+  * Github: [@rdeville](https://github.com/rdeville)
+  * Gitlab: [@r.deville](https://gitlab.com/r.deville)
+  * Framagit: [@rdeville](https://framagit.org/rdeville)
+
+## 📝 License
+
+Copyright © 2024 [Romain Deville](code@romaindeville.fr)
+
+This project is under following licenses (**OR**) :
+
+* [MIT][main_license]
+* [BEERWARE][beerware_license]
+
+[main_license]: https://framagit.org/rdeville-public/opentofu/gitlab-user/blob/main/LICENSE
+[beerware_license]: https://framagit.org/rdeville-public/opentofu/gitlab-user/blob/main/LICENSE.BEERWARE
+<!-- END DOTGIT-SYNC BLOCK MANAGED -->
