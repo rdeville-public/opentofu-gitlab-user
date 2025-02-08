@@ -1,6 +1,14 @@
 <!-- markdownlint-disable-file -->
 # CHANGELOG
 
+## v0.1.1 (2025-02-08)
+
+### 🩹 Patch
+
+  * ⬆️ Upgrade dotgit files from DGS templates (!4) by Romain Deville ([`5129a3b`](https://framagit.org/rdeville-public/opentofu/gitlab-user/-/commit/5129a3b02ec334cfb4a35c8159ddeb886bb6263e))
+  * ⬆️ Update dotgit files from DGS Templates by Romain Deville ([`bfb86a5`](https://framagit.org/rdeville-public/opentofu/gitlab-user/-/commit/bfb86a526caa05cbba46c2e0d36c4e722c9f39ec)) 🔏
+  * 🔧(dgs): Upgrade .dotgit.yaml to latest version by Romain Deville ([`0166642`](https://framagit.org/rdeville-public/opentofu/gitlab-user/-/commit/016664262433208cd625ef7cafbcf9aad6ad3778)) 🔏
+
 ## v0.1.0 (2025-02-08)
 
 ### ✨ Minor
