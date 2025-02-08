@@ -89,14 +89,14 @@ module "repo" {
 
 * [opentofu](https://opentofu.org/docs/):
   `>= 1.8, < 2.0`
-* [gitlab](https://search.opentofu.org/provider/opentofu/gitlab/):
+* [gitlab](https://search.opentofu.org/provider/gitlabhq/gitlab/):
   `~>17.0`
 
 ### Resources
 
-* [resource.gitlab_user_gpgkey.this](https://registry.terraform.io/providers/opentofu/gitlab/latest/docs/resources/user_gpgkey)
+* [resource.gitlab_user_gpgkey.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/user_gpgkey)
   > Manager user GPG keys
-* [resource.gitlab_user_sshkey.this](https://registry.terraform.io/providers/opentofu/gitlab/latest/docs/resources/user_sshkey)
+* [resource.gitlab_user_sshkey.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/user_sshkey)
   > Manager user SSH keys
 
 <!-- markdownlint-capture -->
